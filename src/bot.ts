@@ -39,8 +39,8 @@ const startBot = async () => {
     }
 
     if (interaction.commandName === "call") {
-      await interaction.reply("@here Lets play some Apex Legends");
-      await interaction.followUp("@here");
+      await interaction.channel.send("@here Lets play some Apex Legends");
+      await interaction.reply("I called your friends!");
     }
   });
 };
