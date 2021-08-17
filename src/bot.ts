@@ -16,7 +16,7 @@ const startBot = async () => {
     if (!interaction.isCommand()) return;
 
     if (interaction.commandName === "ping") {
-      await interaction.reply("Pong!");
+      await interaction.reply(`Websocket heartbeat: ${client.ws.ping}ms.`);
     }
     if (interaction.commandName === "hello") {
       await interaction.reply("Oh, hello there!");
@@ -39,7 +39,9 @@ const startBot = async () => {
     }
 
     if (interaction.commandName === "call") {
-      await interaction.channel.send("@here Lets play some Apex Legends");
+      await interaction.channel.send(
+        "@here Lets play some Apex Legends, friends!",
+      );
       await interaction.reply("I called your friends!");
     }
   });

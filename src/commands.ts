@@ -1,7 +1,7 @@
 const commands = [
   {
     name: "ping",
-    description: "Replies with Pong!",
+    description: "Reply the ms",
   },
   { name: "hello", description: "Says hello!" },
   { name: "play", description: "Play the requested song" },
