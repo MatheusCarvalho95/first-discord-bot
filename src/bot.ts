@@ -27,14 +27,20 @@ const startBot = async () => {
     }
 
     if (interaction.commandName === "gif") {
-      const image = await getRandomImage();
+      const query = interaction.options.getString("query", false);
+      const image = await getRandomImage(query);
       await interaction.reply(image);
     }
 
     if (interaction.commandName === "joke") {
-      console.log(interaction);
       const joke = await getRandomJoke();
-      await interaction.reply(`${joke.setup}..... ${joke.punchline}`);
+      await interaction.reply(joke.setup);
+      await interaction.followUp(joke.punchline);
+    }
+
+    if (interaction.commandName === "call") {
+      await interaction.reply("@here Lets play some Apex Legends");
+      await interaction.followUp("@here");
     }
   });
 };

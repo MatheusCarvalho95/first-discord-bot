@@ -8,10 +8,22 @@ const commands = [
   {
     name: "gif",
     description: "Get a random gif",
+    options: [
+      {
+        name: "query",
+        description: "a search query",
+        required: false,
+        type: 3,
+      },
+    ],
   },
   {
     name: "joke",
     description: "I'm gonna tell you a joke, not good, but a joke",
+  },
+  {
+    name: "call",
+    description: "call the server to play Apex Legends",
   },
 ];
 export default commands;
