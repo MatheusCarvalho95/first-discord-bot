@@ -1,6 +1,14 @@
-import { Client, Intents, TextChannel } from "discord.js";
+import { Channel, Client, Intents, TextChannel } from "discord.js";
 
-import { BOT_TOKEN, getRandomImage, getRandomJoke } from "./helpers";
+import {
+  BOT_TOKEN,
+  getMapRotation,
+  getPlayerInfo,
+  getRandomImage,
+  getRandomJoke,
+  getServerStatus,
+  PREFIX,
+} from "./helpers";
 import cron from "cron";
 
 const client = new Client({
@@ -41,20 +49,40 @@ const startBot = async () => {
       await interaction.reply(joke.setup);
       await interaction.followUp(joke.punchline);
     }
+  });
 
-    if (interaction.commandName === "call") {
-      await interaction.channel.send(
-        "@here Lets play some Apex Legends, friends!",
+  client.on("messageCreate", async ({ author, content, channel }) => {
+    const itsTimeChannel = client.channels.cache.get("877289658579578920");
+    if (author.bot) return;
+    if (content === `${PREFIX}call`) {
+      (itsTimeChannel as TextChannel).send(
+        `@here, ${author.username} is calling you to play Apex Legends , lets play, friends!`,
       );
-      await interaction.reply("I called your friends!");
+    }
+    if (content.startsWith(`${PREFIX}user_info`)) {
+      const query = content.split(" ", 2);
+      if (!query[1]) return;
+      channel.send("Okay friend, i'm gonna get some info for ya");
+      const info = await getPlayerInfo(query[1]);
+      channel.send(info);
+    }
+    if (content.startsWith(`${PREFIX}map_rotation`)) {
+      channel.send("Okay friend, gunna scout sum maps");
+      const info = await getMapRotation();
+      channel.send(info);
+    }
+
+    if (content.startsWith(`${PREFIX}server_status`)) {
+      channel.send("Okay friend, these are the server status:");
+      const info = await getServerStatus();
+      channel.send(info);
     }
   });
 };
 
 export const sendDailyMessage = () => {
-  const channel = client.channels.cache.get("877289658579578920");
-
-  (channel as TextChannel).send("@here, it's time friends!");
+  const itsTimeChannel = client.channels.cache.get("877289658579578920");
+  (itsTimeChannel as TextChannel).send("@here, it's time friends!");
 };
 
 export default startBot;
