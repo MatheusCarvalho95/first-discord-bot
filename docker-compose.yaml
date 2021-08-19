@@ -3,4 +3,4 @@ services:
   app:
     env_file: ./.env
     build: .
-    image: DiscordApexBot
+    image: discord-apex-bot
